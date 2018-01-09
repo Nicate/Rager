@@ -2,8 +2,10 @@ package com.kirkwarez.rager.midi;
 
 import javax.sound.midi.MidiDevice.Info;
 
+import com.kirkwarez.rager.Rager;
+
 public class RageInfo extends Info {
 	public RageInfo() {
-		super("Rager", "Kirk", "Rage, RAGE, against the dying of the light.", "1.0.0");
+		super(Rager.getApplicationName(), Rager.getApplicationAuthor(), Rager.getApplicationDescription(), Rager.getApplicationVersion());
 	}
 }

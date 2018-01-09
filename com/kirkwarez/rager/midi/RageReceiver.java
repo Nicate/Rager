@@ -25,7 +25,7 @@ public class RageReceiver implements MidiDeviceReceiver {
 			robot = new Robot();
 		}
 		catch(AWTException exception) {
-			throw new MidiUnavailableException("Robot no work :(");
+			throw new MidiUnavailableException("Robot is not available.");
 		}
 		
 		raging = false;

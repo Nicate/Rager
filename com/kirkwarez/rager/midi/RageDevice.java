@@ -15,7 +15,6 @@ public class RageDevice implements MidiDevice {
 	private boolean wasOpen;
 	
 	private ArrayList<Receiver> receivers;
-	private ArrayList<Transmitter> transmitters;
 	
 	
 	RageDevice(RageInfo info) {
@@ -25,7 +24,6 @@ public class RageDevice implements MidiDevice {
 		wasOpen = false;
 		
 		receivers = new ArrayList<>();
-		transmitters = new ArrayList<>();
 	}
 	
 	
@@ -40,7 +38,7 @@ public class RageDevice implements MidiDevice {
 			isOpen = true;
 		}
 		else {
-			throw new MidiUnavailableException();
+			throw new MidiUnavailableException("Device has been closed.");
 		}
 	}
 	
@@ -49,12 +47,9 @@ public class RageDevice implements MidiDevice {
 		isOpen = false;
 		wasOpen = true;
 		
-		for(Receiver receiver : receivers) {
+		// Clone to prevent concurrent modification exceptions.
+		for(Receiver receiver : new ArrayList<>(receivers)) {
 			receiver.close();
-		}
-		
-		for(Transmitter transmitter : transmitters) {
-			transmitter.close();
 		}
 	}
 	
@@ -67,12 +62,12 @@ public class RageDevice implements MidiDevice {
 	
 	@Override
 	public int getMaxReceivers() {
-		return Integer.MAX_VALUE;
+		return -1;
 	}
 	
 	@Override
 	public int getMaxTransmitters() {
-		return Integer.MAX_VALUE;
+		return 0;
 	}
 	
 	
@@ -99,24 +94,16 @@ public class RageDevice implements MidiDevice {
 	
 	@Override
 	public Transmitter getTransmitter() throws MidiUnavailableException {
-		Transmitter transmitter = new RageTransmitter(this);
-		
-		transmitters.add(transmitter);
-		
-		return transmitter;
+		throw new MidiUnavailableException("You are the one that has to rage!");
 	}
 	
 	@Override
 	public List<Transmitter> getTransmitters() {
-		return new ArrayList<>(transmitters);
+		return new ArrayList<>();
 	}
 	
 	
 	void removeReceiver(Receiver receiver) {
 		receivers.remove(receiver);
-	}
-	
-	void removeTransmitter(Transmitter transmitter) {
-		transmitters.remove(transmitter);
 	}
 }
