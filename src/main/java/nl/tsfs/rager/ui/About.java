@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.ui;
+package nl.tsfs.rager.ui;
 
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
@@ -9,19 +9,22 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.kirkwarez.rager.Rager;
+import nl.tsfs.rager.Rager;
 
 public class About extends JDialog {
 	private static final long serialVersionUID = 7934842710634366954L;
 	
 	
 	public About() {
-		setTitle(Rager.getApplicationName() + " " + Rager.getApplicationVersion());
+		setTitle(Rager.getInstance().getName() + " " + Rager.getInstance().getVersion());
 		
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		
+		setResizable(false);
 		
 		JButton okButton = new JButton("OK");
 		okButton.addActionListener(new ActionListener() {
@@ -33,23 +36,33 @@ public class About extends JDialog {
 		
 		JTextArea nameTextArea = new JTextArea();
 		nameTextArea.setFont(okButton.getFont());
+		nameTextArea.setWrapStyleWord(true);
+		nameTextArea.setLineWrap(true);
 		nameTextArea.setEditable(false);
 		nameTextArea.setColumns(40);
 		nameTextArea.setRows(1);
-		nameTextArea.setText(Rager.getApplicationName());
+		nameTextArea.setText(Rager.getInstance().getName());
+		nameTextArea.setCaretPosition(0);
+		
+		JScrollPane nameScrollPane = new JScrollPane(nameTextArea);
 		
 		JLabel nameLabel = new JLabel("Name:");
-		nameLabel.setLabelFor(nameTextArea);
+		nameLabel.setLabelFor(nameScrollPane);
 		
 		JTextArea versionTextArea = new JTextArea();
 		versionTextArea.setFont(okButton.getFont());
+		versionTextArea.setWrapStyleWord(true);
+		versionTextArea.setLineWrap(true);
 		versionTextArea.setEditable(false);
 		versionTextArea.setColumns(40);
 		versionTextArea.setRows(1);
-		versionTextArea.setText(Rager.getApplicationVersion());
+		versionTextArea.setText(Rager.getInstance().getVersion());
+		versionTextArea.setCaretPosition(0);
+		
+		JScrollPane versionScrollPane = new JScrollPane(versionTextArea);
 		
 		JLabel versionLabel = new JLabel("Version:");
-		versionLabel.setLabelFor(versionTextArea);
+		versionLabel.setLabelFor(versionScrollPane);
 		
 		JTextArea descriptionTextArea = new JTextArea();
 		descriptionTextArea.setFont(okButton.getFont());
@@ -58,20 +71,28 @@ public class About extends JDialog {
 		descriptionTextArea.setEditable(false);
 		descriptionTextArea.setColumns(40);
 		descriptionTextArea.setRows(4);
-		descriptionTextArea.setText(Rager.getApplicationDescription());
+		descriptionTextArea.setText(Rager.getInstance().getDescription());
+		descriptionTextArea.setCaretPosition(0);
+		
+		JScrollPane descriptionScrollPane = new JScrollPane(descriptionTextArea);
 		
 		JLabel descriptionLabel = new JLabel("Description:");
-		descriptionLabel.setLabelFor(descriptionTextArea);
+		descriptionLabel.setLabelFor(descriptionScrollPane);
 		
 		JTextArea authorTextArea = new JTextArea();
 		authorTextArea.setFont(okButton.getFont());
+		authorTextArea.setWrapStyleWord(true);
+		authorTextArea.setLineWrap(true);
 		authorTextArea.setEditable(false);
 		authorTextArea.setColumns(40);
 		authorTextArea.setRows(1);
-		authorTextArea.setText(Rager.getApplicationAuthor());
+		authorTextArea.setText(Rager.getInstance().getAuthor());
+		authorTextArea.setCaretPosition(0);
+		
+		JScrollPane authorScrollPane = new JScrollPane(authorTextArea);
 		
 		JLabel authorLabel = new JLabel("Author:");
-		authorLabel.setLabelFor(authorTextArea);
+		authorLabel.setLabelFor(authorScrollPane);
 		
 		JTextArea licenseTextArea = new JTextArea();
 		licenseTextArea.setFont(okButton.getFont());
@@ -79,11 +100,14 @@ public class About extends JDialog {
 		licenseTextArea.setLineWrap(true);
 		licenseTextArea.setEditable(false);
 		licenseTextArea.setColumns(40);
-		licenseTextArea.setRows(4);
-		licenseTextArea.setText(Rager.getApplicationLicense());
+		licenseTextArea.setRows(10);
+		licenseTextArea.setText(Rager.getInstance().getLicense());
+		licenseTextArea.setCaretPosition(0);
+		
+		JScrollPane licenseScrollPane = new JScrollPane(licenseTextArea);
 		
 		JLabel licenseLabel = new JLabel("License:");
-		licenseLabel.setLabelFor(licenseTextArea);
+		licenseLabel.setLabelFor(licenseScrollPane);
 		
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
@@ -98,12 +122,12 @@ public class About extends JDialog {
 						.addComponent(authorLabel))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
-						.addComponent(nameTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-						.addComponent(versionTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-						.addComponent(descriptionTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-						.addComponent(licenseTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-						.addComponent(authorTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE)
-						.addComponent(okButton, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+						.addComponent(nameScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(versionScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(descriptionScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(licenseScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(authorScrollPane, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(okButton, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -112,23 +136,23 @@ public class About extends JDialog {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(nameLabel)
-						.addComponent(nameTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(nameScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(versionLabel)
-						.addComponent(versionTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(versionScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(descriptionLabel)
-						.addComponent(descriptionTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(descriptionScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(authorLabel)
-						.addComponent(authorTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(authorScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(licenseLabel)
-						.addComponent(licenseTextArea, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(licenseScrollPane, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addComponent(okButton)
 					.addContainerGap())

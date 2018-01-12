@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.midi;
+package nl.tsfs.rager.midi;
 
 import java.awt.AWTException;
 import java.awt.Robot;

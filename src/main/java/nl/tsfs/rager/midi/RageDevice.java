@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.midi;
+package nl.tsfs.rager.midi;
 
 import java.util.ArrayList;
 import java.util.List;

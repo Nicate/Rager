@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.ui;
+package nl.tsfs.rager.ui;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -11,13 +11,13 @@ import javax.sound.midi.Receiver;
 import javax.sound.midi.Transmitter;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
-import com.kirkwarez.rager.Rager;
+import nl.tsfs.rager.Rager;
 
 public class ContentPane extends JPanel {
 	private static final long serialVersionUID = 7436816061624365132L;
@@ -114,7 +114,7 @@ public class ContentPane extends JPanel {
 	
 	private void loadRageDeviceInfo() {
 		for(MidiDevice.Info info : MidiSystem.getMidiDeviceInfo()) {
-			if(info.getName().equals(Rager.getApplicationName())) {
+			if(info.getName().equals(Rager.getInstance().getName())) {
 				hasRageDeviceInfo = true;
 				
 				rageDeviceInfo = info;
@@ -146,7 +146,7 @@ public class ContentPane extends JPanel {
 	
 	private void openMidiDevice(MidiDevice.Info midiDeviceInfo) {
 		if(!hasRageDeviceInfo) {
-			JOptionPane.showMessageDialog(this, "Unable to find MIDI device: " + rageDeviceInfo.getName() + ".", "Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Unable to find MIDI device: " + Rager.getInstance().getName() + ".", "Error", JOptionPane.ERROR_MESSAGE);
 			
 			return;
 		}

@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.midi;
+package nl.tsfs.rager.midi;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiDevice.Info;

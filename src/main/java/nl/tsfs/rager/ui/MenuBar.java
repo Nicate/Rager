@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.ui;
+package nl.tsfs.rager.ui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;

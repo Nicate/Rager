@@ -1,0 +1,39 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>nl.tsfs</groupId>
+	<artifactId>rager</artifactId>
+	<version>1.0.0</version>
+	<packaging>jar</packaging>
+
+	<name>Rager</name>
+	<url>https://github.com/TwoStepsFromSpace/Rager</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.target>9</maven.compiler.target>
+		<maven.compiler.source>9</maven.compiler.source>
+	</properties>
+
+	<organization>
+		<name>Two Steps From Space</name>
+		<url>https://github.com/TwoStepsFromSpace</url>
+	</organization>
+	<scm>
+		<url>https://github.com/TwoStepsFromSpace/Rager.git</url>
+	</scm>
+	
+	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+	</build>
+	<issueManagement>
+		<url>https://github.com/TwoStepsFromSpace/Rager/issues</url>
+		<system>GitHub</system>
+	</issueManagement>
+	<description>Rage, RAGE, against the dying of the light.</description>
+</project>

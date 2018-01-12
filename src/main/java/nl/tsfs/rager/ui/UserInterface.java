@@ -1,4 +1,4 @@
-package com.kirkwarez.rager.ui;
+package nl.tsfs.rager.ui;
 
 import java.awt.AWTException;
 import java.awt.Image;
@@ -16,7 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
-import com.kirkwarez.rager.Rager;
+import nl.tsfs.rager.Rager;
 
 public class UserInterface extends JFrame {
 	private static final long serialVersionUID = 2548502086624175357L;
@@ -41,7 +41,7 @@ public class UserInterface extends JFrame {
 	public UserInterface() {
 		loadIcons();
 		
-		setTitle(Rager.getApplicationName());
+		setTitle(Rager.getInstance().getName());
 		
 		menuBar = new MenuBar();
 		setJMenuBar(menuBar);
@@ -86,7 +86,7 @@ public class UserInterface extends JFrame {
 		hasTrayIcon = SystemTray.isSupported() && !getIconImages().isEmpty();
 		
 		if(hasTrayIcon) {
-			trayIcon = new TrayIcon(getIconImages().get(0), Rager.getApplicationDescription());
+			trayIcon = new TrayIcon(getIconImages().get(0),Rager.getInstance().getDescription());
 			
 			trayIcon.addMouseListener(new MouseAdapter() {
 				@Override
