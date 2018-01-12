@@ -5,4 +5,4 @@ sudo: false
 jdk:
 - oraclejdk9
 
-script: mvn clean install
+script: mvn clean install assembly:single
