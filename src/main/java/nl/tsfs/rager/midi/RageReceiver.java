@@ -31,14 +31,12 @@ public class RageReceiver implements MidiDeviceReceiver {
 	}
 
 
-	@Override
-	public MidiDevice getMidiDevice() {
+	@Override public MidiDevice getMidiDevice() {
 		return device;
 	}
 
 
-	@Override
-	public void close() {
+	@Override public void close() {
 		raging = false;
 
 		if(shift) {
@@ -51,8 +49,7 @@ public class RageReceiver implements MidiDeviceReceiver {
 	}
 
 
-	@Override
-	public void send(MidiMessage message, long timeStamp) {
+	@Override public void send(MidiMessage message, long timeStamp) {
 		if(device.isOpen()) {
 			int length = message.getLength();
 			int status = message.getStatus();
@@ -95,20 +92,20 @@ public class RageReceiver implements MidiDeviceReceiver {
 			}
 
 			new Thread(() -> {
-                try {
-                    Robot robot = new Robot();
+				try {
+					Robot robot = new Robot();
 
-                    robot.delay(150);
+					robot.delay(150);
 
-                    while(raging) {
-                        sendToRobot("o");
-                        robot.delay(50);
-                    }
-                }
-                catch(Exception exception) {
-                    // Silent failure. Should not occur anyways, we managed to construct a Robot before.
-                }
-            }).start();
+					while(raging) {
+						sendToRobot("o");
+						robot.delay(50);
+					}
+				}
+				catch(Exception exception) {
+					// Silent failure. Should not occur anyways, we managed to construct a Robot before.
+				}
+			}).start();
 
 			if(event >= 0x80 && event < 0x90 && length == 3) {
 				raging = false;
@@ -130,7 +127,7 @@ public class RageReceiver implements MidiDeviceReceiver {
 	private void sendToRobot(String string) {
 		char[] characters = string.toCharArray();
 		int length = characters.length;
-		for (int i = 0; i < length; i++) {
+		for(int i = 0; i < length; i++) {
 			char character = characters[i];
 			int event = getKeyEvent(character);
 
@@ -139,35 +136,62 @@ public class RageReceiver implements MidiDeviceReceiver {
 		}
 	}
 
-	private int getKeyEvent(char c){
-		switch (c){
-			case 'a': return KeyEvent.VK_A;
-			case 'b': return KeyEvent.VK_B;
-			case 'c': return KeyEvent.VK_C;
-			case 'd': return KeyEvent.VK_D;
-			case 'e': return KeyEvent.VK_E;
-			case 'f': return KeyEvent.VK_F;
-			case 'g': return KeyEvent.VK_G;
-			case 'h': return KeyEvent.VK_H;
-			case 'i': return KeyEvent.VK_I;
-			case 'j': return KeyEvent.VK_J;
-			case 'k': return KeyEvent.VK_K;
-			case 'l': return KeyEvent.VK_L;
-			case 'm': return KeyEvent.VK_M;
-			case 'n': return KeyEvent.VK_N;
-			case 'o': return KeyEvent.VK_O;
-			case 'p': return KeyEvent.VK_P;
-			case 'q': return KeyEvent.VK_Q;
-			case 'r': return KeyEvent.VK_R;
-			case 's': return KeyEvent.VK_S;
-			case 't': return KeyEvent.VK_T;
-			case 'u': return KeyEvent.VK_U;
-			case 'v': return KeyEvent.VK_V;
-			case 'w': return KeyEvent.VK_W;
-			case 'x': return KeyEvent.VK_X;
-			case 'y': return KeyEvent.VK_Y;
-			case 'z': return KeyEvent.VK_A;
-			default: return 0;
+	private int getKeyEvent(char c) {
+		switch(c) {
+			case 'a':
+				return KeyEvent.VK_A;
+			case 'b':
+				return KeyEvent.VK_B;
+			case 'c':
+				return KeyEvent.VK_C;
+			case 'd':
+				return KeyEvent.VK_D;
+			case 'e':
+				return KeyEvent.VK_E;
+			case 'f':
+				return KeyEvent.VK_F;
+			case 'g':
+				return KeyEvent.VK_G;
+			case 'h':
+				return KeyEvent.VK_H;
+			case 'i':
+				return KeyEvent.VK_I;
+			case 'j':
+				return KeyEvent.VK_J;
+			case 'k':
+				return KeyEvent.VK_K;
+			case 'l':
+				return KeyEvent.VK_L;
+			case 'm':
+				return KeyEvent.VK_M;
+			case 'n':
+				return KeyEvent.VK_N;
+			case 'o':
+				return KeyEvent.VK_O;
+			case 'p':
+				return KeyEvent.VK_P;
+			case 'q':
+				return KeyEvent.VK_Q;
+			case 'r':
+				return KeyEvent.VK_R;
+			case 's':
+				return KeyEvent.VK_S;
+			case 't':
+				return KeyEvent.VK_T;
+			case 'u':
+				return KeyEvent.VK_U;
+			case 'v':
+				return KeyEvent.VK_V;
+			case 'w':
+				return KeyEvent.VK_W;
+			case 'x':
+				return KeyEvent.VK_X;
+			case 'y':
+				return KeyEvent.VK_Y;
+			case 'z':
+				return KeyEvent.VK_A;
+			default:
+				return 0;
 		}
 
 	}
