@@ -22,15 +22,36 @@
 	<scm>
 		<url>https://github.com/TwoStepsFromSpace/Rager.git</url>
 	</scm>
-	
+
+
+
 	<build>
+		<finalName>Rager</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
 				<filtering>true</filtering>
 			</resource>
 		</resources>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>nl.tsfs.rager.Rager</mainClass>
+						</manifest>
+					</archive>
+					<finalName>Rager-${pom.version}</finalName>
+					<appendAssemblyId>false</appendAssemblyId>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+		</plugins>
 	</build>
+
 	<issueManagement>
 		<url>https://github.com/TwoStepsFromSpace/Rager/issues</url>
 		<system>GitHub</system>
