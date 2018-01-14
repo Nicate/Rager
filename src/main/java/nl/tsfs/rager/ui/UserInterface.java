@@ -17,6 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
 import nl.tsfs.rager.Rager;
+import nl.tsfs.rager.model.Model;
 
 public class UserInterface extends JFrame {
 	private static final long serialVersionUID = 2548502086624175357L;
@@ -31,6 +32,8 @@ public class UserInterface extends JFrame {
 	};
 	
 	
+	private Model model;
+	
 	private JMenuBar menuBar;
 	private ContentPane contentPane;
 	
@@ -39,6 +42,8 @@ public class UserInterface extends JFrame {
 	
 	
 	public UserInterface() {
+		model = Model.getInstance();
+		
 		loadIcons();
 		
 		setTitle(Rager.getInstance().getName());
@@ -83,10 +88,10 @@ public class UserInterface extends JFrame {
 	private void setCloseOperation() {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
-		hasTrayIcon = SystemTray.isSupported() && !getIconImages().isEmpty();
+		hasTrayIcon = model.getSettings().getCloseToTray() && SystemTray.isSupported() && !getIconImages().isEmpty();
 		
 		if(hasTrayIcon) {
-			trayIcon = new TrayIcon(getIconImages().get(0),Rager.getInstance().getDescription());
+			trayIcon = new TrayIcon(getIconImages().get(0), Rager.getInstance().getDescription());
 			
 			trayIcon.addMouseListener(new MouseAdapter() {
 				@Override

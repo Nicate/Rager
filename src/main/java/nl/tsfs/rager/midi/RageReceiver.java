@@ -60,9 +60,8 @@ public class RageReceiver implements MidiDeviceReceiver {
 			int status = message.getStatus();
 			byte[] values = message.getMessage();
 			
+			// There is always an event.
 			int event = values[0] & 0xFF;
-			int note = values[1] & 0xFF;
-			int velocity = values[2] & 0xFF;
 			
 			StringBuilder builder = new StringBuilder();
 			
@@ -73,15 +72,20 @@ public class RageReceiver implements MidiDeviceReceiver {
 			builder.append("; ");
 			
 			builder.append(String.format("0x%02X", event));
-			builder.append(", ");
-			builder.append(String.format("%d", note));
-			builder.append(", ");
-			builder.append(String.format("%d", velocity));
+			
+			for(int index = 1; index < length; index++) {
+				int value = values[index] & 0xFF;
+				
+				builder.append(", ");
+				builder.append(String.format("%d", value));
+			}
 			
 			System.out.println(builder.toString());
 			
-			if(event >= 0x90 && event < 0xA0) {
+			if(event >= 0x90 && event < 0xA0 && length == 3) {
 				raging = true;
+				
+				int velocity = values[2] & 0xFF;
 				
 				if(velocity > 0x40) {
 					robot.keyPress(KeyEvent.VK_SHIFT);
@@ -116,7 +120,7 @@ public class RageReceiver implements MidiDeviceReceiver {
 				}
 			}).start();
 			
-			if(event >= 0x80 && event < 0x90) {
+			if(event >= 0x80 && event < 0x90 && length == 3) {
 				raging = false;
 				
 				robot.keyPress(KeyEvent.VK_O);

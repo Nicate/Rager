@@ -18,9 +18,13 @@ import javax.swing.JPanel;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import nl.tsfs.rager.Rager;
+import nl.tsfs.rager.model.Model;
 
 public class ContentPane extends JPanel {
 	private static final long serialVersionUID = 7436816061624365132L;
+	
+	
+	private Model model;
 	
 	private boolean hasRageDeviceInfo;
 	private boolean hasMidiDeviceInfos;
@@ -42,6 +46,8 @@ public class ContentPane extends JPanel {
 	
 	
 	public ContentPane() {
+		model = Model.getInstance();
+		
 		hasRageDeviceInfo = false;
 		hasMidiDeviceInfos = false;
 		
