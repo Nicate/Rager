@@ -1,13 +1,11 @@
 package nl.tsfs.rager.midi;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
 
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiDeviceReceiver;
-import javax.sound.midi.MidiMessage;
-import javax.sound.midi.MidiUnavailableException;
+import java.awt.*;
+import java.awt.event.*;
+
+import javax.sound.midi.*;
+
 
 public class RageReceiver implements MidiDeviceReceiver {
 	private RageDevice device;

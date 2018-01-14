@@ -1,12 +1,10 @@
 package nl.tsfs.rager.ui;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.SwingUtilities;
+import java.awt.event.*;
+
+import javax.swing.*;
+
 
 public class MenuBar extends JMenuBar {
 	private static final long serialVersionUID = -4797368779787938506L;

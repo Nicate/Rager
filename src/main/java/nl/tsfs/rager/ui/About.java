@@ -1,19 +1,15 @@
 package nl.tsfs.rager.ui;
 
-import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.*;
+import java.awt.event.*;
 
-import nl.tsfs.rager.Rager;
+import javax.swing.*;
+import javax.swing.GroupLayout.*;
+import javax.swing.LayoutStyle.*;
+
+import nl.tsfs.rager.*;
+
 
 public class About extends JDialog {
 	private static final long serialVersionUID = 7934842710634366954L;
@@ -109,6 +105,7 @@ public class About extends JDialog {
 		JLabel licenseLabel = new JLabel("License:");
 		licenseLabel.setLabelFor(licenseScrollPane);
 		
+		// @formatter:off
 		GroupLayout groupLayout = new GroupLayout(getContentPane());
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -158,6 +155,7 @@ public class About extends JDialog {
 					.addContainerGap())
 		);
 		getContentPane().setLayout(groupLayout);
+		// @formatter:on
 		
 		pack();
 		

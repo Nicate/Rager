@@ -1,23 +1,17 @@
 package nl.tsfs.rager.ui;
 
-import java.awt.AWTException;
-import java.awt.Image;
-import java.awt.Rectangle;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.net.URL;
-import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.JFrame;
-import javax.swing.JMenuBar;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.*;
+import java.util.*;
 
-import nl.tsfs.rager.Rager;
-import nl.tsfs.rager.model.Model;
+import javax.imageio.*;
+import javax.swing.*;
+
+import nl.tsfs.rager.*;
+import nl.tsfs.rager.model.*;
+
 
 public class UserInterface extends JFrame {
 	private static final long serialVersionUID = 2548502086624175357L;

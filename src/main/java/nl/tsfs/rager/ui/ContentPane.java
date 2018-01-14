@@ -1,24 +1,17 @@
 package nl.tsfs.rager.ui;
 
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.util.ArrayList;
 
-import javax.sound.midi.MidiDevice;
-import javax.sound.midi.MidiSystem;
-import javax.sound.midi.MidiUnavailableException;
-import javax.sound.midi.Receiver;
-import javax.sound.midi.Transmitter;
-import javax.swing.GroupLayout;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.LayoutStyle.ComponentPlacement;
+import java.awt.event.*;
+import java.util.*;
 
-import nl.tsfs.rager.Rager;
-import nl.tsfs.rager.model.Model;
+import javax.sound.midi.*;
+import javax.swing.*;
+import javax.swing.GroupLayout.*;
+import javax.swing.LayoutStyle.*;
+
+import nl.tsfs.rager.*;
+import nl.tsfs.rager.model.*;
+
 
 public class ContentPane extends JPanel {
 	private static final long serialVersionUID = 7436816061624365132L;
@@ -69,7 +62,7 @@ public class ContentPane extends JPanel {
 		loadRageDeviceInfo();
 		loadMidiDeviceInfos();
 		
-		JComboBox<MidiDevice.Info> midiDeviceInfosComboBox = new JComboBox<MidiDevice.Info>(midiDeviceInfos);
+		JComboBox<MidiDevice.Info> midiDeviceInfosComboBox = new JComboBox<>(midiDeviceInfos);
 		
 		midiDeviceInfosComboBox.addItemListener(new ItemListener() {
 			@Override
@@ -93,6 +86,7 @@ public class ContentPane extends JPanel {
 		JLabel midiDeviceInfosLabel = new JLabel("MIDI device:");
 		midiDeviceInfosLabel.setLabelFor(midiDeviceInfosComboBox);
 		
+		// @formatter:off
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
@@ -115,6 +109,7 @@ public class ContentPane extends JPanel {
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
+		// @formatter:on
 	}
 	
 	

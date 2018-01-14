@@ -1,8 +1,10 @@
 package nl.tsfs.rager.midi;
 
-import javax.sound.midi.MidiDevice.Info;
 
-import nl.tsfs.rager.Rager;
+import javax.sound.midi.MidiDevice.*;
+
+import nl.tsfs.rager.*;
+
 
 public class RageInfo extends Info {
 	public RageInfo() {

@@ -1,6 +1,8 @@
 package nl.tsfs.rager.model;
 
-import nl.tsfs.rager.json.GsonProvider;
+
+import nl.tsfs.rager.json.*;
+
 
 public class Model {
 	private static Model instance;

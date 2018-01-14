@@ -1,5 +1,6 @@
 package nl.tsfs.rager.model;
 
-public class Step {
 
+public class Step {
+	
 }

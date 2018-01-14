@@ -1,8 +1,8 @@
 package nl.tsfs.rager.model;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+
+import java.util.*;
+
 
 public class Combinations implements Iterable<Combination> {
 	private ArrayList<Combination> combinations;

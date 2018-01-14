@@ -1,13 +1,14 @@
 package nl.tsfs.rager;
 
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.Properties;
 
-import javax.swing.SwingUtilities;
+import java.io.*;
+import java.nio.charset.*;
+import java.util.*;
 
-import nl.tsfs.rager.ui.UserInterface;
+import javax.swing.*;
+
+import nl.tsfs.rager.ui.*;
+
 
 public class Rager {
 	public static void main(String[] args) {
