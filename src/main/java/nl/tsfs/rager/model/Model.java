@@ -1,6 +1,8 @@
 package nl.tsfs.rager.model;
 
 
+import com.google.gson.*;
+
 import nl.tsfs.rager.json.*;
 
 
@@ -41,11 +43,11 @@ public class Model {
 	
 	
 	public void load() {
-		
+		Gson gson = gsonProvider.getGson();
 	}
 	
 	public void save() {
-		
+		Gson gson = gsonProvider.getGson();
 	}
 	
 	

@@ -76,4 +76,24 @@ public class Rager {
 	public String getLicense() {
 		return properties.getProperty("license", defaultPropertyValue);
 	}
+	
+	public String getArtifact() {
+		return properties.getProperty("artifact", defaultPropertyValue);
+	}
+	
+	
+	public File getDirectory() {
+		String operatingSystem = System.getProperty("os.name", defaultPropertyValue);
+		File userDirectory = new File(System.getProperty("user.home"));
+		
+		if(operatingSystem.contains("Windows")) {
+			return new File(new File(new File(userDirectory, "AppData"), "Roaming"), getArtifact());
+		}
+		else if(operatingSystem.contains("Linux") || operatingSystem.contains("Mac OS X")) {
+			return new File(userDirectory, "." + getArtifact());
+		}
+		else {
+			return new File(userDirectory, getName());
+		}
+	}
 }
