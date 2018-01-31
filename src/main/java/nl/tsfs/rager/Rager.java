@@ -33,7 +33,7 @@ public class Rager {
 	private Properties properties;
 	
 	
-	public Rager() {
+	private Rager() {
 		properties = new Properties();
 		
 		try {
