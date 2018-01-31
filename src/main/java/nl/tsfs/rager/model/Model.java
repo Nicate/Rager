@@ -5,13 +5,9 @@ import nl.tsfs.rager.json.*;
 
 
 public class Model {
-	private static Model instance;
+	private static Model instance = new Model();
 	
 	public static Model getInstance() {
-		if(instance == null) {
-			instance = new Model();
-		}
-		
 		return instance;
 	}
 	
@@ -23,7 +19,7 @@ public class Model {
 	private GsonProvider gsonProvider;
 	
 	
-	public Model() {
+	private Model() {
 		combinations = new Combinations();
 		configurations = new Configurations();
 		settings = new Settings();
