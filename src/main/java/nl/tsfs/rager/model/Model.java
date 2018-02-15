@@ -1,53 +1,18 @@
 package nl.tsfs.rager.model;
 
 
-import com.google.gson.*;
-
-import nl.tsfs.rager.json.*;
-
-
-public class Model {
-	private static Model instance = new Model();
-	
-	public static Model getInstance() {
-		return instance;
-	}
-	
+public class Model extends Persistable {
+	private static final long serialVersionUID = 4978136529616900931L;
 	
 	private Combinations combinations;
 	private Configurations configurations;
 	private Settings settings;
 	
-	private GsonProvider gsonProvider;
 	
-	
-	private Model() {
+	Model() {
 		combinations = new Combinations();
 		configurations = new Configurations();
 		settings = new Settings();
-		
-		gsonProvider = new GsonProvider();
-		gsonProvider.register(Combination.class);
-		gsonProvider.register(Combinations.class);
-		gsonProvider.register(Configuration.class);
-		gsonProvider.register(Configurations.class);
-		gsonProvider.register(Event.class);
-		gsonProvider.register(Model.class);
-		gsonProvider.register(Sequence.class);
-		gsonProvider.register(Settings.class);
-		gsonProvider.register(Step.class);
-		gsonProvider.create();
-		
-		load();
-	}
-	
-	
-	public void load() {
-		Gson gson = gsonProvider.getGson();
-	}
-	
-	public void save() {
-		Gson gson = gsonProvider.getGson();
 	}
 	
 	

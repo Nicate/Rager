@@ -4,21 +4,15 @@ package nl.tsfs.rager.model;
 import java.util.*;
 
 
-public class Combinations implements Iterable<Combination> {
+public class Combinations extends Persistable implements Iterable<Combination> {
+	private static final long serialVersionUID = -6439850231931936750L;
+	
+	
 	private ArrayList<Combination> combinations;
 	
 	
-	public Combinations() {
+	Combinations() {
 		combinations = new ArrayList<>();
-	}
-	
-	
-	void load() {
-		
-	}
-	
-	void save() {
-		
 	}
 	
 	

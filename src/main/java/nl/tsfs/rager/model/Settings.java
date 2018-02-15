@@ -1,25 +1,19 @@
 package nl.tsfs.rager.model;
 
 
-public class Settings {
+public class Settings extends Persistable {
+	private static final long serialVersionUID = 7427810269233803696L;
+	
+	
 	private String midiDeviceInfoName;
 	
 	private boolean closeToTray;
 	
 	
-	public Settings() {
+	Settings() {
 		midiDeviceInfoName = null;
 		
 		closeToTray = false;
-	}
-	
-	
-	void load() {
-		
-	}
-	
-	void save() {
-		
 	}
 	
 	

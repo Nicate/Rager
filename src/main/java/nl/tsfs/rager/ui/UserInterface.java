@@ -26,7 +26,7 @@ public class UserInterface extends JFrame {
 	};
 	
 	
-	private Model model;
+	private Warehouse warehouse;
 	
 	private JMenuBar menuBar;
 	private ContentPane contentPane;
@@ -36,7 +36,7 @@ public class UserInterface extends JFrame {
 	
 	
 	public UserInterface() {
-		model = Model.getInstance();
+		warehouse = Warehouse.getInstance();
 		
 		loadIcons();
 		
@@ -82,7 +82,7 @@ public class UserInterface extends JFrame {
 	private void setCloseOperation() {
 		setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
 		
-		hasTrayIcon = model.getSettings().getCloseToTray() && SystemTray.isSupported() && !getIconImages().isEmpty();
+		hasTrayIcon = SystemTray.isSupported() && !getIconImages().isEmpty();
 		
 		if(hasTrayIcon) {
 			trayIcon = new TrayIcon(getIconImages().get(0), Rager.getInstance().getDescription());
@@ -100,7 +100,13 @@ public class UserInterface extends JFrame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent event) {
-				if(hasTrayIcon) {
+				boolean closeToTray;
+				
+				synchronized(warehouse.getLock()) {
+					closeToTray = warehouse.getModel().getSettings().getCloseToTray();
+				}
+				
+				if(hasTrayIcon && closeToTray) {
 					try {
 						setVisible(false);
 						

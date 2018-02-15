@@ -17,7 +17,7 @@ public class ContentPane extends JPanel {
 	private static final long serialVersionUID = 7436816061624365132L;
 	
 	
-	private Model model;
+	private Warehouse warehouse;
 	
 	private boolean hasRageDeviceInfo;
 	private boolean hasMidiDeviceInfos;
@@ -39,7 +39,7 @@ public class ContentPane extends JPanel {
 	
 	
 	public ContentPane() {
-		model = Model.getInstance();
+		warehouse = Warehouse.getInstance();
 		
 		hasRageDeviceInfo = false;
 		hasMidiDeviceInfos = false;

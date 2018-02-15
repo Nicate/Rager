@@ -4,21 +4,15 @@ package nl.tsfs.rager.model;
 import java.util.*;
 
 
-public class Configurations implements Iterable<Configuration> {
+public class Configurations extends Persistable implements Iterable<Configuration> {
+	private static final long serialVersionUID = 1929875488589259081L;
+	
+	
 	private ArrayList<Configuration> configurations;
 	
 	
-	public Configurations() {
+	Configurations() {
 		configurations = new ArrayList<>();
-	}
-	
-	
-	void load() {
-		
-	}
-	
-	void save() {
-		
 	}
 	
 	
