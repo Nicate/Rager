@@ -42,7 +42,7 @@
 							<mainClass>nl.tsfs.rager.Rager</mainClass>
 						</manifest>
 					</archive>
-					<finalName>Rager-${pom.version}</finalName>
+					<finalName>Rager-${project.version}</finalName>
 					<appendAssemblyId>false</appendAssemblyId>
 					<descriptorRefs>
 						<descriptorRef>jar-with-dependencies</descriptorRef>
