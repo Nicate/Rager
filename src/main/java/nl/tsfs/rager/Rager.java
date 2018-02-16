@@ -93,7 +93,7 @@ public class Rager {
 			return new File(userDirectory, "." + getArtifact());
 		}
 		else {
-			return new File(userDirectory, getName());
+			return new File(userDirectory, getArtifact());
 		}
 	}
 }
