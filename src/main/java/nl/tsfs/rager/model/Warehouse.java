@@ -20,6 +20,8 @@ public class Warehouse {
 	}
 	
 	
+	private static final String defaultResource = "/resources/models/default.json";
+	
 	private static final String fileName = "model.json";
 	
 	
@@ -35,7 +37,7 @@ public class Warehouse {
 		model = new Model();
 		lock = new Object();
 		
-		gson = new Gson();
+		gson = new GsonBuilder().setPrettyPrinting().create();
 		file = new File(Rager.getInstance().getDirectory(), fileName);
 		encoding = StandardCharsets.UTF_8.name();
 	}
@@ -54,50 +56,65 @@ public class Warehouse {
 	}
 	
 	
-	public void load() throws IOException, JsonIOException, JsonSyntaxException {
+	public void load() throws IOException {
 		// Make sure we can load the file.
 		ensureFile();
 		
 		// Load the model.
-		try(Reader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file), encoding))) {
-			model = gson.fromJson(reader, Model.class);
+		model = loadModel(new FileInputStream(file));
+	}
+	
+	public void save() throws IOException {
+		// Make sure we can save the file.
+		ensureFile();
+		
+		// Save the model.
+		saveModel(model, new FileOutputStream(file));
+	}
+	
+	
+	private void ensureFile() throws IOException {
+		// Make sure the file exists.
+		if(!file.exists()) {
+			// Make sure the directory exists.
+			file.getParentFile().mkdirs();
+			
+			// Load the default model.
+			Model defaultModel = loadModel(getClass().getResourceAsStream(defaultResource));
+			
+			// Save the default model as the application model.
+			saveModel(defaultModel, new FileOutputStream(file));
+		}
+	}
+	
+	
+	private Model loadModel(InputStream stream) throws IOException {
+		Model modelToLoad;
+		
+		// Load the model.
+		try(Reader reader = new BufferedReader(new InputStreamReader(stream, encoding))) {
+			modelToLoad = gson.fromJson(reader, Model.class);
+		}
+		catch(JsonIOException | JsonSyntaxException exception) {
+			throw new IOException("Could not load the JSON.", exception);
 		}
 		
 		// Run the post-loading hooks.
-		model.load();
+		modelToLoad.load();
+		
+		return modelToLoad;
 	}
 	
-	public void save() throws IOException, JsonIOException {
-		// Make sure we can save the file.
-		ensureDirectory();
-		
+	private void saveModel(Model modelToSave, OutputStream stream) throws IOException {
 		// Run the pre-saving hooks.
-		model.save();
+		modelToSave.save();
 		
 		// Save the model.
-		try(Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), encoding))) {
-			gson.toJson(model, writer);
+		try(Writer writer = new BufferedWriter(new OutputStreamWriter(stream, encoding))) {
+			gson.toJson(modelToSave, writer);
 		}
-	}
-	
-	
-	private void ensureDirectory() {
-		File directory = file.getParentFile();
-		
-		if(!directory.exists()) {
-			directory.mkdirs();
-		}
-	}
-	
-	private void ensureFile() {
-		if(!file.exists()) {
-			// TODO Copy a default model.json from the JAR instead.
-			try {
-				save();
-			}
-			catch(Exception exception) {
-				// Tough luck.
-			}
+		catch(JsonIOException exception) {
+			throw new IOException("Could not save the JSON.", exception);
 		}
 	}
 }
