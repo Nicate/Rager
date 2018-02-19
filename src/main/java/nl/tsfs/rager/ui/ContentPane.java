@@ -2,6 +2,7 @@ package nl.tsfs.rager.ui;
 
 
 import java.awt.event.*;
+import java.io.*;
 import java.util.*;
 
 import javax.sound.midi.*;
@@ -62,6 +63,8 @@ public class ContentPane extends JPanel {
 		loadRageDeviceInfo();
 		loadMidiDeviceInfos();
 		
+		loadModel();
+		
 		JComboBox<MidiDevice.Info> midiDeviceInfosComboBox = new JComboBox<>(midiDeviceInfos);
 		
 		midiDeviceInfosComboBox.addItemListener(new ItemListener() {
@@ -71,13 +74,45 @@ public class ContentPane extends JPanel {
 					closeMidiDevice();
 				}
 				else if(event.getStateChange() == ItemEvent.SELECTED) {
-					openMidiDevice((MidiDevice.Info) event.getItem());
+					MidiDevice.Info midiDeviceInfo = (MidiDevice.Info) event.getItem();
+					
+					openMidiDevice(midiDeviceInfo);
+					
+					synchronized(warehouse.getLock()) {
+						warehouse.getModel().getSettings().setMidiDeviceInfoName(midiDeviceInfo.getName());
+					}
+					
+					saveModel();
 				}
 			}
 		});
 		
 		if(hasMidiDeviceInfos) {
-			openMidiDevice(midiDeviceInfos[midiDeviceInfosComboBox.getSelectedIndex()]);
+			// Make sure all state is correctly initialized.
+			openMidiDevice((MidiDevice.Info) midiDeviceInfosComboBox.getSelectedItem());
+			
+			// Find the name of the configured MIDI device.
+			String midiDeviceInfoName = null;
+			
+			synchronized(warehouse.getLock()) {
+				midiDeviceInfoName = warehouse.getModel().getSettings().getMidiDeviceInfoName();
+			}
+			
+			// Now we can switch to the configured MIDI device (if it is available).
+			for(MidiDevice.Info midiDeviceInfo : midiDeviceInfos) {
+				if(midiDeviceInfo.getName().equals(midiDeviceInfoName)) {
+					midiDeviceInfosComboBox.setSelectedItem(midiDeviceInfo);
+				}
+			}
+			
+			// If we didn't switch (it wasn't configured or it wasn't available), save our initial state.
+			MidiDevice.Info midiDeviceInfo = (MidiDevice.Info) midiDeviceInfosComboBox.getSelectedItem();
+			
+			synchronized(warehouse.getLock()) {
+				warehouse.getModel().getSettings().setMidiDeviceInfoName(midiDeviceInfo.getName());
+			}
+			
+			saveModel();
 		}
 		else {
 			midiDeviceInfosComboBox.setEnabled(false);
@@ -254,5 +289,28 @@ public class ContentPane extends JPanel {
 	
 	public void close() {
 		closeMidiDevice();
+	}
+	
+	
+	private void loadModel() {
+		try {
+			synchronized(warehouse.getLock()) {
+				warehouse.load();
+			}
+		}
+		catch(IOException exception) {
+			JOptionPane.showMessageDialog(this, "Unable to load configuration: " + exception.getMessage() + ".", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	private void saveModel() {
+		try {
+			synchronized(warehouse.getLock()) {
+				warehouse.save();
+			}
+		}
+		catch(IOException exception) {
+			JOptionPane.showMessageDialog(this, "Unable to save configuration: " + exception.getMessage() + ".", "Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 }

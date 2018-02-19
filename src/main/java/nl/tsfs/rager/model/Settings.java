@@ -21,7 +21,16 @@ public class Settings extends Persistable {
 		return midiDeviceInfoName;
 	}
 	
+	public void setMidiDeviceInfoName(String midiDeviceInfoName) {
+		this.midiDeviceInfoName = midiDeviceInfoName;
+	}
+	
+	
 	public boolean getCloseToTray() {
 		return closeToTray;
+	}
+	
+	public void setCloseToTray(boolean closeToTray) {
+		this.closeToTray = closeToTray;
 	}
 }
