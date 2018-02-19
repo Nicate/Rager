@@ -17,6 +17,8 @@ import nl.tsfs.rager.model.*;
 public class ContentPane extends JPanel {
 	private static final long serialVersionUID = 7436816061624365132L;
 	
+	private static final String realTimeSequencerMidiDeviceInfoName = "Real Time Sequencer";
+	
 	
 	private Warehouse warehouse;
 	
@@ -164,7 +166,11 @@ public class ContentPane extends JPanel {
 		
 		for(MidiDevice.Info info : MidiSystem.getMidiDeviceInfo()) {
 			try {
-				if(MidiSystem.getMidiDevice(info).getMaxTransmitters() != 0) {
+				// Skip MIDI devices that can't transmit as well as the Java built-in sequencer.
+				boolean isTransmitter = MidiSystem.getMidiDevice(info).getMaxTransmitters() != 0;
+				boolean isRealTimeSequencer = info.getName().equals(realTimeSequencerMidiDeviceInfoName);
+				
+				if(isTransmitter && !isRealTimeSequencer) {
 					infos.add(info);
 				}
 			}
