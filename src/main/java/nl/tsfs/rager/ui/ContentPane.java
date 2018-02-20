@@ -40,8 +40,11 @@ public class ContentPane extends JPanel {
 	private Receiver receiver;
 	private Transmitter transmitter;
 	
+	private JComboBox<MidiDevice.Info> midiDeviceInfosComboBox;
+	
 	
 	public ContentPane() {
+		// Initialize the state.
 		warehouse = Warehouse.getInstance();
 		
 		hasRageDeviceInfo = false;
@@ -62,13 +65,8 @@ public class ContentPane extends JPanel {
 		receiver = null;
 		transmitter = null;
 		
-		loadRageDeviceInfo();
-		loadMidiDeviceInfos();
-		
-		loadModel();
-		
-		JComboBox<MidiDevice.Info> midiDeviceInfosComboBox = new JComboBox<>(midiDeviceInfos);
-		
+		// Initialize the UI.
+		midiDeviceInfosComboBox = new JComboBox<>();
 		midiDeviceInfosComboBox.addItemListener(new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent event) {
@@ -89,39 +87,19 @@ public class ContentPane extends JPanel {
 			}
 		});
 		
-		if(hasMidiDeviceInfos) {
-			// Make sure all state is correctly initialized.
-			openMidiDevice((MidiDevice.Info) midiDeviceInfosComboBox.getSelectedItem());
-			
-			// Find the name of the configured MIDI device.
-			String midiDeviceInfoName = null;
-			
-			synchronized(warehouse.getLock()) {
-				midiDeviceInfoName = warehouse.getModel().getSettings().getMidiDeviceInfoName();
-			}
-			
-			// Now we can switch to the configured MIDI device (if it is available).
-			for(MidiDevice.Info midiDeviceInfo : midiDeviceInfos) {
-				if(midiDeviceInfo.getName().equals(midiDeviceInfoName)) {
-					midiDeviceInfosComboBox.setSelectedItem(midiDeviceInfo);
-				}
-			}
-			
-			// If we didn't switch (it wasn't configured or it wasn't available), save our initial state.
-			MidiDevice.Info midiDeviceInfo = (MidiDevice.Info) midiDeviceInfosComboBox.getSelectedItem();
-			
-			synchronized(warehouse.getLock()) {
-				warehouse.getModel().getSettings().setMidiDeviceInfoName(midiDeviceInfo.getName());
-			}
-			
-			saveModel();
-		}
-		else {
-			midiDeviceInfosComboBox.setEnabled(false);
-		}
-		
 		JLabel midiDeviceInfosLabel = new JLabel("MIDI device:");
 		midiDeviceInfosLabel.setLabelFor(midiDeviceInfosComboBox);
+		
+		JButton midiDeviceInfoButton = new JButton("Refresh");
+		midiDeviceInfoButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				refreshMidiDeviceInfos();
+				
+				// The combo box currently dictates the width of the window.
+				SwingUtilities.getWindowAncestor(ContentPane.this).pack();
+			}
+		});
 		
 		// @formatter:off
 		GroupLayout groupLayout = new GroupLayout(this);
@@ -134,6 +112,9 @@ public class ContentPane extends JPanel {
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
 							.addComponent(midiDeviceInfosComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.PREFERRED_SIZE, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addGroup(groupLayout.createParallelGroup(Alignment.LEADING)
+							.addComponent(midiDeviceInfoButton))
 					.addContainerGap())
 		);
 		groupLayout.setVerticalGroup(
@@ -142,11 +123,61 @@ public class ContentPane extends JPanel {
 					.addContainerGap()
 					.addGroup(groupLayout.createParallelGroup(Alignment.BASELINE)
 						.addComponent(midiDeviceInfosLabel)
-						.addComponent(midiDeviceInfosComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+						.addComponent(midiDeviceInfosComboBox, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(midiDeviceInfoButton))
 					.addContainerGap())
 		);
 		setLayout(groupLayout);
 		// @formatter:on
+		
+		// Initialize the contents.
+		loadModel();
+		
+		refreshMidiDeviceInfos();
+	}
+	
+	
+	private void refreshMidiDeviceInfos() {
+		// Clear the combo box. This deselects (and hence closes) the currently open MIDI device.
+		midiDeviceInfosComboBox.removeAllItems();
+		
+		// Refresh the MIDI devices.
+		loadRageDeviceInfo();
+		loadMidiDeviceInfos();
+		
+		// Set up the combo box.
+		if(hasMidiDeviceInfos) {
+			// Find the name of the configured MIDI device.
+			String midiDeviceInfoName = null;
+			
+			synchronized(warehouse.getLock()) {
+				midiDeviceInfoName = warehouse.getModel().getSettings().getMidiDeviceInfoName();
+			}
+			
+			// Populate the combo box. This selects (and hence opens) the first MIDI device.
+			// It also saves the selection (which is useful if there is there is no configured
+			// MIDI device or if the configured MIDI device is not available).
+			for(MidiDevice.Info midiDeviceInfo : midiDeviceInfos) {
+				midiDeviceInfosComboBox.addItem(midiDeviceInfo);
+			}
+			
+			// Now we can switch to the configured MIDI device (if it is available).
+			// This also saves the selection (overwriting the previously saved default).
+			// This seems a little excessive, but it saves a lot of code plus we don't
+			// have to introduce special cases with state into the damn listener :P
+			for(MidiDevice.Info midiDeviceInfo : midiDeviceInfos) {
+				if(midiDeviceInfo.getName().equals(midiDeviceInfoName)) {
+					midiDeviceInfosComboBox.setSelectedItem(midiDeviceInfo);
+				}
+			}
+			
+			// There are now MIDI devices to choose from.
+			midiDeviceInfosComboBox.setEnabled(true);
+		}
+		else {
+			// There are no MIDI devices to choose from.
+			midiDeviceInfosComboBox.setEnabled(false);
+		}
 	}
 	
 	
