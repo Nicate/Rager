@@ -13,14 +13,14 @@ public class Event extends Persistable {
 	private Type type;
 	private int note;
 	
-	private Steps steps;
+	private Actions actions;
 	
 	
 	public Event() {
 		setType(Type.On);
 		setNote(0);
 		
-		steps = new Steps();
+		actions = new Actions();
 	}
 	
 	
@@ -42,7 +42,7 @@ public class Event extends Persistable {
 	}
 	
 	
-	public Steps getSteps() {
-		return steps;
+	public Actions getActions() {
+		return actions;
 	}
 }
