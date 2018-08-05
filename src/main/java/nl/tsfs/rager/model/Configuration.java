@@ -7,11 +7,15 @@ public class Configuration extends Persistable {
 	
 	private String name;
 	
+	private int channel;
+	
 	private Events events;
 	
 	
 	public Configuration() {
 		setName("New Configuration");
+		
+		setChannel(0);
 		
 		events = new Events();
 	}
@@ -23,6 +27,15 @@ public class Configuration extends Persistable {
 	
 	public void setName(String name) {
 		this.name = name;
+	}
+	
+	
+	public int getChannel() {
+		return channel;
+	}
+	
+	public void setChannel(int channel) {
+		this.channel = channel;
 	}
 	
 	
