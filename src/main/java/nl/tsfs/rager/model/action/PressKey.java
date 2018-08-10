@@ -16,4 +16,13 @@ public class PressKey extends Action {
 	public PressKey() {
 		code = KeyEvent.VK_ENTER;
 	}
+	
+	
+	public int getCode() {
+		return code;
+	}
+	
+	public void setCode(int code) {
+		this.code = code;
+	}
 }

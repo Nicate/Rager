@@ -4,10 +4,14 @@ package nl.tsfs.rager.model;
 public class Configuration extends Persistable {
 	private static final long serialVersionUID = 3714466867514132841L;
 	
+	private static final int MinimumChannel = 0;
+	private static final int MaximumChannel = 15;
+	
 	
 	private String name;
 	
-	private int channel;
+	private int minimumChannel;
+	private int maximumChannel;
 	
 	private Events events;
 	
@@ -15,7 +19,8 @@ public class Configuration extends Persistable {
 	public Configuration() {
 		setName("New Configuration");
 		
-		setChannel(0);
+		setMinimumChannel(MinimumChannel);
+		setMaximumChannel(MaximumChannel);
 		
 		events = new Events();
 	}
@@ -30,12 +35,21 @@ public class Configuration extends Persistable {
 	}
 	
 	
-	public int getChannel() {
-		return channel;
+	public int getMinimumChannel() {
+		return minimumChannel;
 	}
 	
-	public void setChannel(int channel) {
-		this.channel = channel;
+	public void setMinimumChannel(int minimumChannel) {
+		this.minimumChannel = minimumChannel;
+	}
+	
+	
+	public int getMaximumChannel() {
+		return maximumChannel;
+	}
+	
+	public void setMaximumChannel(int maximumChannel) {
+		this.maximumChannel = maximumChannel;
 	}
 	
 	
