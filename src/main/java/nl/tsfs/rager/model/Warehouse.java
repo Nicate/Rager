@@ -8,6 +8,7 @@ import com.google.gson.*;
 
 import nl.tsfs.rager.*;
 import nl.tsfs.rager.json.*;
+import nl.tsfs.rager.model.action.*;
 
 
 /**
@@ -38,7 +39,13 @@ public class Warehouse {
 		model = new Model();
 		lock = new Object();
 		
-		gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Action.class, new ActionAdapter()).create();
+		GsonBuilder gsonBuilder = new GsonBuilder();
+		gsonBuilder.registerTypeAdapter(Configurations.class, new ContainerAdapter<>(Configurations.class, Configuration.class));
+		gsonBuilder.registerTypeAdapter(Events.class, new ContainerAdapter<>(Events.class, Event.class));
+		gsonBuilder.registerTypeAdapter(Actions.class, new ContainerAdapter<>(Actions.class, Action.class, Delay.class.getPackageName()));
+		gsonBuilder.setPrettyPrinting();
+		
+		gson = gsonBuilder.create();
 		file = new File(Rager.getInstance().getDirectory(), fileName);
 		encoding = StandardCharsets.UTF_8.name();
 	}

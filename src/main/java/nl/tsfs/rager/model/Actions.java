@@ -4,7 +4,7 @@ package nl.tsfs.rager.model;
 import java.util.*;
 
 
-public class Actions extends Persistable implements Iterable<Action> {
+public class Actions extends Persistable implements Container<Action> {
 	private static final long serialVersionUID = -3823948716054862067L;
 	
 	
@@ -32,6 +32,12 @@ public class Actions extends Persistable implements Iterable<Action> {
 	@Override
 	public Iterator<Action> iterator() {
 		return actions.iterator();
+	}
+	
+	
+	@Override
+	public void contain(Action contained) {
+		addAction(contained);
 	}
 	
 	

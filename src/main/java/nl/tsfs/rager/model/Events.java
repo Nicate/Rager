@@ -4,7 +4,7 @@ package nl.tsfs.rager.model;
 import java.util.*;
 
 
-public class Events extends Persistable implements Iterable<Event> {
+public class Events extends Persistable implements Container<Event> {
 	private static final long serialVersionUID = -9221670162661475607L;
 	
 	
@@ -32,6 +32,12 @@ public class Events extends Persistable implements Iterable<Event> {
 	@Override
 	public Iterator<Event> iterator() {
 		return events.iterator();
+	}
+	
+	
+	@Override
+	public void contain(Event contained) {
+		addEvent(contained);
 	}
 	
 	

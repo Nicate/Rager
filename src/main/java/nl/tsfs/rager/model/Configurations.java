@@ -4,7 +4,7 @@ package nl.tsfs.rager.model;
 import java.util.*;
 
 
-public class Configurations extends Persistable implements Iterable<Configuration> {
+public class Configurations extends Persistable implements Container<Configuration> {
 	private static final long serialVersionUID = 1929875488589259081L;
 	
 	
@@ -32,6 +32,12 @@ public class Configurations extends Persistable implements Iterable<Configuratio
 	@Override
 	public Iterator<Configuration> iterator() {
 		return configurations.iterator();
+	}
+	
+	
+	@Override
+	public void contain(Configuration contained) {
+		addConfiguration(contained);
 	}
 	
 	
