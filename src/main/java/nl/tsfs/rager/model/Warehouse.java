@@ -7,6 +7,7 @@ import java.nio.charset.*;
 import com.google.gson.*;
 
 import nl.tsfs.rager.*;
+import nl.tsfs.rager.json.*;
 
 
 /**
@@ -37,7 +38,7 @@ public class Warehouse {
 		model = new Model();
 		lock = new Object();
 		
-		gson = new GsonBuilder().setPrettyPrinting().create();
+		gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(Action.class, new ActionAdapter()).create();
 		file = new File(Rager.getInstance().getDirectory(), fileName);
 		encoding = StandardCharsets.UTF_8.name();
 	}
